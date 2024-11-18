@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: camera/
+      dockerfile: Dockerfile
+    volumes:
+      - /run/udev:/run/udev:ro
+    ports:
+      - "9000:9000"
+    restart: always
+    privileged: true
+
+  client:
+    build:
+      context: test-solution
+      dockerfile: Dockerfile
+    depends_on:
+      - server
