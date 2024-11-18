@@ -174,8 +174,7 @@ def create_solution_submission(images: Union[List[np.ndarray], np.ndarray], outp
     df = pd.DataFrame(results_data)
     df.to_csv(output_csv, index=False)
 
-
-if __name__ == '__main__':
+def run_test_solution():
     folder_path = 'images'
     output_csv = 'solution_submission.csv'
 
@@ -190,8 +189,11 @@ if __name__ == '__main__':
 
     # Вызов функции для предсказания и сохранения в CSV
     create_solution_submission(images, output_csv)
-
+    
     with open("solution_submission.csv", "r") as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for row in reader:
             print(row)
+
+if __name__ == '__main__':
+    run_test_solution()

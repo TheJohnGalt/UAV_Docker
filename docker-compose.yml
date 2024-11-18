@@ -16,5 +16,13 @@ services:
     build:
       context: test-solution
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    privileged: true
     depends_on:
       - server

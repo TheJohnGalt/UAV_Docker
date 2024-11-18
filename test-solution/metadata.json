@@ -1,3 +1,6 @@
 {
     "image": "ultralytics/ultralytics:latest-jetson-jetpack6"
 }
+{
+    "image": "ultralytics/ultralytics:latest-jetson-jetpack6"
+}

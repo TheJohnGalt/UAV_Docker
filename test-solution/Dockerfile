@@ -1,4 +1,6 @@
-FROM ultralytics/ultralytics:latest-arm64
+FROM ultralytics/ultralytics:latest
+
+#ultralytics/ultralytics:latest-arm64
 
 WORKDIR /app
 
