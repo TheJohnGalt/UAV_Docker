@@ -11,7 +11,7 @@ RUN apt update && apt install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY * .
 
 RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
 

@@ -1,7 +1,5 @@
 FROM ultralytics/ultralytics:latest
 
-#ultralytics/ultralytics:latest-arm64
-
 WORKDIR /app
 
 COPY . /app

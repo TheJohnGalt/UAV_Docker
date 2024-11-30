@@ -8,7 +8,7 @@ PORT = 9000
 class ImageHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/image':
-            img = Image.open('test.jpg')
+            img = Image.open('camera_input/img.jpg')
             img_byte_arr = io.BytesIO()
             img.save(img_byte_arr, format='JPEG')
             img_byte_arr.seek(0) 

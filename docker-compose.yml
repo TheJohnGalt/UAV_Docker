@@ -2,17 +2,19 @@ version: '3.8'
 
 services:
   server:
+    image: revchenkov/compvis-test_solution:v0.2_camera_arm64
     build:
       context: camera/
       dockerfile: Dockerfile
     volumes:
-      - /run/udev:/run/udev:ro
+      - /d/Coding/AI/UAV/camera_input:/app/camera_input:ro
     ports:
       - "9000:9000"
     restart: always
     privileged: true
 
   client:
+    image: revchenkov/compvis-test_solution:v0.2_client_arm64
     build:
       context: test-solution
       dockerfile: Dockerfile
