@@ -15,7 +15,7 @@ if torch.cuda.is_available():
     device = 'cuda'
 else: print("CUDA не обнаружена, загрузка модели на CPU")
 
-model = YOLO("best.pt").to(device)
+model = YOLO("best_pep.pt").to(device)
 
 
 def slice_image(image, patch_size=640, overlap=0.2):

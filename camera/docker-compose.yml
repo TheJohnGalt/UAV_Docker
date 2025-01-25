@@ -1,13 +1,17 @@
 version: '3.8'
 
 services:
-  camera:
+  server:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - DISPLAY=0
     volumes:
-      - /run/udev:/run/udev:ro
+      - /d/Coding/AI/UAV/camera_input:/app/camera_input:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
     ports:
-      - "8000:8000"
+      - "9000:9000"
+    network_mode: "host"
     restart: always
     privileged: true

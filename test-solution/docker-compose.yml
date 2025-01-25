@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /d/Coding/AI/UAV/output:/app/container_output
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    privileged: true

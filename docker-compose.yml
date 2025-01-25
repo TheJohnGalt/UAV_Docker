@@ -1,23 +1,25 @@
 version: '3.8'
 
 services:
-  server:
-    image: revchenkov/compvis-test_solution:v0.2_camera_arm64
-    build:
-      context: camera/
-      dockerfile: Dockerfile
-    volumes:
-      - /d/Coding/AI/UAV/camera_input:/app/camera_input:ro
-    ports:
-      - "9000:9000"
-    restart: always
-    privileged: true
+  # server:
+  #   image: revchenkov/compvis-test_solution:v0.3_camera
+  #   build:
+  #     context: camera/
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - /d/Coding/AI/UAV/camera_input:/app/camera_input:ro
+  #   ports:
+  #     - "9000:9000"
+  #   restart: always
+  #   privileged: true
 
   client:
-    image: revchenkov/compvis-test_solution:v0.2_client_arm64
+    image: revchenkov/compvis-test_solution:v0.3_client
     build:
       context: test-solution
       dockerfile: Dockerfile
+    volumes:
+      - /d/Coding/AI/UAV/output:/app/container_output
     deploy:
       resources:
         reservations:
@@ -26,5 +28,5 @@ services:
               count: 1
               capabilities: [gpu]
     privileged: true
-    depends_on:
-      - server
+#    depends_on:
+#      - server
