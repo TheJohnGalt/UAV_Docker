@@ -8,15 +8,12 @@ import csv
 import torch
 from ultralytics import YOLO
 
-device = 'cpu'
-
 if torch.cuda.is_available():
     print("Загрузка модели на CUDA")
-    device = 'cuda'
-else: print("CUDA не обнаружена, загрузка модели на CPU")
-
-model = YOLO("best.pt").to(device)
-
+    model = YOLO("best.pt").to('cuda')
+else:
+    print("CUDA не обнаружена, загрузка модели на CPU")
+    model = YOLO("best.pt").to('cpu')
 
 def slice_image(image, patch_size=640, overlap=0.2):
     """

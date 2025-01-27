@@ -1,11 +1,11 @@
-FROM ultralytics/ultralytics:latest
+FROM ultralytics/ultralytics:latest-jetson-jetpack6
 
-#ultralytics/ultralytics:latest-arm64
+
+RUN pip install dill
 
 WORKDIR /app
 
 COPY . /app
 
-RUN pip3 install dill
-
 CMD ["python3", "/app/main.py"]
+

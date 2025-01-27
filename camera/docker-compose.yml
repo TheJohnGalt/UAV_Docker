@@ -1,13 +1,23 @@
 version: '3.8'
 
 services:
-  camera:
+  server:
+    image: revchenkov/compvis-test_solution:v0.3_camera_arm64
     build:
       context: .
       dockerfile: Dockerfile
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     volumes:
-      - /run/udev:/run/udev:ro
+       - /dev/video0:/dev/video0:ro
+       - /tmp/argus_socket:/tmp/argus_socket
     ports:
-      - "8000:8000"
+      - "9000:9000"
     restart: always
     privileged: true

@@ -2,27 +2,44 @@ version: '3.8'
 
 services:
   server:
+    image: revchenkov/compvis-test_solution:v0.3_camera_arm64
     build:
       context: camera/
       dockerfile: Dockerfile
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     volumes:
-      - /run/udev:/run/udev:ro
+       - /dev/video0:/dev/video0:ro
+       - /tmp/argus_socket:/tmp/argus_socket
+       - /home/user/compvis/UAV_Docker/test-solution/container_output:/app/container_output
     ports:
       - "9000:9000"
     restart: always
     privileged: true
 
   client:
+    image: revchenkov/compvis-test_solution:v0.3_client_arm64
     build:
       context: test-solution
       dockerfile: Dockerfile
+    runtime: nvidia
     deploy:
       resources:
         reservations:
           devices:
             - driver: nvidia
-              count: 1
+              count: all
               capabilities: [gpu]
+    volumes:
+       - /dev/video0:/dev/video0:ro
+       - /tmp/argus_socket:/tmp/argus_socket
+       - /home/user/compvis/UAV_Docker/test-solution/container_output:/app/container_output
     privileged: true
     depends_on:
       - server
