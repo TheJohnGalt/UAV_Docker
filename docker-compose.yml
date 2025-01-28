@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   server:
-    image: revchenkov/compvis-test_solution:v0.3_camera_arm64_BENCHMARK
+    image: revchenkov/compvis-test_solution:v0.3_camera_arm64_b
     build:
       context: camera/
       dockerfile: Dockerfile
@@ -24,7 +24,7 @@ services:
     privileged: true
 
   client:
-    image: revchenkov/compvis-test_solution:v0.3_client_arm64_BENCHMARK
+    image: revchenkov/compvis-test_solution:v0.3_client_arm64_b
     build:
       context: test-solution
       dockerfile: Dockerfile

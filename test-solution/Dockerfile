@@ -4,6 +4,8 @@ RUN pip install dill
 
 WORKDIR /app
 
-COPY . /app
+COPY benchmark.py best.pt best_fire.pt main.py main_fire.py solution.py /app
 
-CMD ["python3", "/app/main.py"]
+RUN mkdir container_output
+
+CMD ["python3", "/app/benchmark.py"]

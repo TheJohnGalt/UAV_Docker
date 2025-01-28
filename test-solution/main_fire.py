@@ -7,13 +7,14 @@ import socket
 from datetime import datetime
 import math
 import pickle
+import time
 
 import urllib.request
 import numpy as np
 
 
 # Загрузка модели YOLO
-model = YOLO('best_fire.pt')
+model = YOLO('best_fire.pt').to('cuda')
 
 # Параметры сети для отправки данных
 TCP_IP = '127.0.0.1'
@@ -25,7 +26,7 @@ TCP_PORT = 5005
 
 # Предварительная обработка
 def preprocess_frame(frame):
-    frame = cv2.resize(frame, (640, 640))
+    frame = cv2.resize(frame, (640, 480))
     return frame
 
 # Вычисление угловых отклонений объекта на изображении - ещё считать и считать, но вроде правильно
@@ -181,7 +182,8 @@ while True:
     if not ret_op:
         break
     input_frame_op = preprocess_frame(frame_op)
-    results_op = model(source=input_frame_op, save=False, verbose=False)
+    results_op = model(source=input_frame_op, save=False)
+    end = time.time()
     detections_op = analyze_output(results_op, frame_op, camera_id="operator", camera_params=camera_params_operator)
 
     # Чтение кадра с камеры БПЛА - заглушено п причине выше
