@@ -28,9 +28,12 @@ RUN apt install -y --no-install-recommends python3-pip \
 WORKDIR /app
 
 RUN mkdir imgs
+RUN mkdir container_output
 
-COPY camera.py test.py test.jpg req.txt /app/
+COPY camera.py test.py test.jpg req.txt bench.mp4 /app/
 
 EXPOSE 9000
 
 CMD ["python3", "/app/camera.py"]
+
+

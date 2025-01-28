@@ -33,7 +33,12 @@ if __name__ == '__main__':
     width = 3280
     height = 2464
 
-    cam = cv2.VideoCapture(f'nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink')
+    # gstreamer для камеры
+    #nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink
+    vidPath = 'bench.mp4'
+    
+    cam = cv2.VideoCapture(vidPath)
+    print(cam.isOpened())
 
     with socketserver.TCPServer(("", PORT), ImageHandler) as httpd:
         print(f"Сервер запущен на порту {PORT}")

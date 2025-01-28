@@ -3,7 +3,8 @@ import cv2
 width = 1920
 height = 1080
 
-cam = cv2.VideoCapture(f'nvarguscamerasrc num-buffers=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, format=(string)NV12, framerate=(fraction)30/1 ! nvvidconv ! video/x-raw, format=I420 ! appsink', cv2.CAP_GSTREAMER)
+vidPath = 'container_output/bench.mp4'
+cam = cv2.VideoCapture(vidPath)
 
 ret, frame = cam.read()
 if ret:

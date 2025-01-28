@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     #image = image[:, :, :3] # так как ИИ работает с трёхканальными изображениями, убераем альфа канал
 
-    #cv2.imwrite("container_output/new.jpg", image)
+    #cv2.imwrite("container_output/new.jpg", image) # запись изображения для дебага
 
     while True:
         image = fetch_image()
