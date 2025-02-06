@@ -1,13 +1,20 @@
-import cv2
+import socket
 
-width = 1920
-height = 1080
+def request_image():
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect(('192.168.0.24', 65432))
 
-vidPath = 'container_output/bench.mp4'
-cam = cv2.VideoCapture(vidPath)
+    client_socket.sendall(b'GET_IMAGE')
+    
+    with open('received_image.jpg', 'wb') as image_file:
+        while True:
+            data = client_socket.recv(1024)
+            if not data:
+                break
+            image_file.write(data)
 
-ret, frame = cam.read()
-if ret:
-    print(frame)
-else:
-    print("Failed to capture frame")
+    print("Изображение получено и сохранено как 'received_image.jpg'.")
+    client_socket.close()
+
+if __name__ == "__main__":
+    request_image()

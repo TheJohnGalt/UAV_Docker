@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  client:
+    image: revchenkov/compvis-test_solution:v0.3_client_arm64_rock
+    build:
+      context: test-solution
+      dockerfile: Dockerfile_rock
+    volumes:
+       - /usr/lib/librknnrt.so:/usr/lib/librknnrt.so
+       - /home/radxa/compvis2/UAV_Docker/container_input:/app/container_input
+       - /home/radxa/compvis2/UAV_Docker/container_output:/app/container_output
+       - /dev/video0:/dev/video0:ro
+       - /tmp/argus_socket:/tmp/argus_socket
+    privileged: true

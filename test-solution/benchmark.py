@@ -1,24 +1,20 @@
-from PIL import Image
-import io
-import numpy as np
-import pandas as pd
 import cv2
-import torch
-import os
-import csv
 import torch
 from ultralytics import YOLO
 import time
 import csv
 import subprocess
 
-vidPath = 'container_output/1.MP4'
-    
+vidPath = 'container_input/1.MP4'
+
 cam = cv2.VideoCapture(vidPath)
 
 if torch.cuda.is_available():
     print("Загрузка модели на CUDA")
-    model = YOLO("best_fire.pt").to('cuda')
+    model = YOLO("best.pt").to('cuda')
+else:
+    print("Загрузка модели на NPU")
+    model = YOLO("yolo11n_rknn_model")
 
 start_time = time.time()
 frames_counter = 0
@@ -27,10 +23,9 @@ seconds = 1
 while True:
 
     status, bgr_image = cam.read()
-    
+
     if status:
-        #bgr_image = cv2.resize(bgr_image, (680, 640))
-        res = model(source=bgr_image, verbose = False)
+        res = model(source=bgr_image, verbose = False, task="obb")
     else: print('cant read file')
         
     frames_counter += 1
@@ -52,5 +47,3 @@ while True:
             
         frames_counter = 0
         seconds += 1
-
-    	

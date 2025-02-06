@@ -1,0 +1,23 @@
+FROM ultralytics/ultralytics:latest-arm64
+
+RUN pip3 install rknn-toolkit-lite2
+
+RUN pip install --upgrade pip setuptools
+
+RUN apt-get update && apt-get install -y cmake
+
+RUN pip install --use-pep517 rknn-toolkit2==2.3.0
+
+RUN pip install -U torch torchvision
+
+WORKDIR /app
+
+COPY benchmark.py best_fire.pt best.pt main_fire.py main.py solution.py yolo11n_rknn_model /app/
+
+RUN mkdir yolo11n_rknn_model
+COPY yolo11n_rknn_model yolo11n_rknn_model/
+
+RUN mkdir container_input
+RUN mkdir container_output
+
+CMD ["python3", "/app/benchmark.py"]

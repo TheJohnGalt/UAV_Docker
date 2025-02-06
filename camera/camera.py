@@ -35,6 +35,7 @@ if __name__ == '__main__':
 
     # gstreamer для камеры
     #nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink
+    
     vidPath = 'bench.mp4'
     
     cam = cv2.VideoCapture(vidPath)
