@@ -6,6 +6,12 @@ import json
 import math
 from datetime import datetime
 
+frame_size = (640, 640)
+fps = 29.97
+output_path = 'container_output/output_video.avi'
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+out = cv2.VideoWriter(output_path, fourcc, fps, frame_size)
+
 # Загрузка модели YOLO
 model = YOLO('best_pep.pt', task='detect')
 
@@ -75,9 +81,10 @@ def analyze_detections(detections, frame, gps_coordinates, azimuth, fov_horizont
         cv2.rectangle(frame, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
         label = f"Class: {int(class_id)}, Conf: {confidence:.2f}"
         cv2.putText(frame, label, (int(x_min), int(y_min) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        out.write(frame)
     
     if len(detections) == 0:
-        
+        out.write(frame)
 
         # Делаем скриншот и сохраняем изображение
         # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -120,3 +127,6 @@ if __name__ == "__main__":
     video_source = "bench.mp4"  # Камера по умолчанию
     azimuth = 45  # Текущий азимут камеры
     main(video_source, gps_coordinates, azimuth)
+
+    out.release()
+    cv2.destroyAllWindows()

@@ -16,4 +16,4 @@ COPY benchmark.py best_pep.pt best.pt Fire_Detection.py Human_Detection.py solut
 
 RUN mkdir container_output
 
-CMD ["python3", "/app/test.py"]
+CMD ["python3", "/app/Human_Detection.py"]
