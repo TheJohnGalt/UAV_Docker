@@ -7,7 +7,7 @@ import math
 from datetime import datetime
 
 frame_size = (640, 640)
-fps = 29.97
+fps = 30.0
 output_path = 'container_output/output_video.avi'
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 out = cv2.VideoWriter(output_path, fourcc, fps, frame_size)
