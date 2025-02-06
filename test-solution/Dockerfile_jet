@@ -12,7 +12,7 @@ COPY requirements.txt /app/
 
 RUN pip install -r requirements.txt
 
-COPY benchmark.py best_pep.pt best.pt Fire_Detection.py Human_Detection.py solution.py test_scv.py bench.mp4 test.py /app/
+COPY benchmark.py best_pep.pt best.pt Fire_Detection.py Human_Detection.py solution.py test_scv.py bench2.mp4 test.py /app/
 
 RUN mkdir container_output
 
