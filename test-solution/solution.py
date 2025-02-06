@@ -15,7 +15,7 @@ if torch.cuda.is_available():
     device = 'cuda'
 else: print("CUDA не обнаружена, загрузка модели на CPU")
 
-model = YOLO("best.pt").to(device)
+model = YOLO("best_pep.pt").to(device)
 
 
 def slice_image(image, patch_size=640, overlap=0.2):
@@ -66,7 +66,7 @@ def process_yolo_patches(patches, model):
 
     # Прогоняем каждый патч через модель YOLO
     for patch in patches:
-        result = model(patch)  # Предсказания для одного патча
+        result = model(patch, verbose=False)  # Предсказания для одного патча
         results.append(result[0])
 
     return results
@@ -196,4 +196,7 @@ def run_test_solution():
             print(row)
 
 if __name__ == '__main__':
-    run_test_solution()
+    cap = cv2.VideoCapture('bench2.mp4')
+    while cap.isOpened():
+        ret, frame = cap.read()
+        print(predict(frame))

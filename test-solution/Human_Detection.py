@@ -115,7 +115,6 @@ def main(video_source, gps_coordinates, azimuth, fov_horizontal=90, fov_vertical
         #cv2.imshow("Detections", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-
     cap.release()
     cv2.destroyAllWindows()
 
@@ -124,7 +123,7 @@ gps_coordinates = {"latitude": 55.7558, "longitude": 37.6173}
 
 # Запуск программы
 if __name__ == "__main__":
-    video_source = "bench2.mp4"  # Камера по умолчанию
+    video_source = "bench3.mp4"  # Камера по умолчанию
     azimuth = 45  # Текущий азимут камеры
     main(video_source, gps_coordinates, azimuth)
 
