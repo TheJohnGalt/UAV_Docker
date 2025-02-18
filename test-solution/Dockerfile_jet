@@ -10,10 +10,10 @@ WORKDIR /app
 
 COPY requirements.txt /app/
 
-RUN pip install -r requirements.txt
+RUN pip install --use-pep517 -r requirements.txt
 
-COPY benchmark.py best_pep.pt best.pt Fire_Detection.py Human_Detection.py solution.py test_scv.py bench3.mp4 test.py /app/
+COPY new_detection_for_image.py benchmark.py best_yolo11.pt best.pt best_pep.pt Fire_Detection.py Human_Detection.py Human_Detection_vid.py bench3.mp4 /app/
 
 RUN mkdir container_output
 
-CMD ["python3", "/app/Human_Detection.py"]
+CMD ["python3", "/app/new_detection_for_image.py"]

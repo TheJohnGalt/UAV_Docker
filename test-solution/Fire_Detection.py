@@ -196,7 +196,7 @@ def send_screenshot_in_json(detections, frame):
     print(f"JSON для отправки (длина {len(json_string)} байт):", data_to_send["message"])
 
 # Инициализация видеопотоков
-cap_operator = cv2.VideoCapture(0)  # Камера оператора
+cap_operator = cv2.VideoCapture('bench3.mp4') # cv2.VideoCapture(0)  # Камера оператора
 # cap_uav = cv2.VideoCapture(1)     # Камера БПЛА (закомментирована для примера)
 
 #if not cap_operator.isOpened() or not cap_uav.isOpened():
@@ -249,7 +249,7 @@ while True:
     #     send_screenshot_in_json(detections_uav, frame_uav)
 
     # Отображение кадра(ов) в окне
-    cv2.imshow('Operator Camera', frame_op)
+    #cv2.imshow('Operator Camera', frame_op)
     # cv2.imshow('UAV Camera', frame_uav)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):

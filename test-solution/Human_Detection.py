@@ -6,14 +6,8 @@ import json
 import math
 from datetime import datetime
 
-frame_size = (640, 640)
-fps = 30.0
-output_path = 'container_output/output_video.avi'
-fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-out = cv2.VideoWriter(output_path, fourcc, fps, frame_size)
-
 # Загрузка модели YOLO
-model = YOLO('best_pep.pt', task='detect')
+model = YOLO('best_yolo11.pt')
 
 # Функция для предварительной обработки изображения
 def preprocess_frame(frame):
@@ -53,11 +47,11 @@ def analyze_detections(detections, frame, gps_coordinates, azimuth, fov_horizont
     results = []
 
     for detection in detections:
-        #x_min, y_min, x_max, y_max, confidence, class_id = detection[:6]
-        confidence = 100
-        class_id = 1
+        #x_min, y_min, x_max, y_max, confidence, class_id = detection[:4]
+        confidence = 100.0
+        class_id = 0
         x_min, y_min, x_max, y_max = detection[:4]
-        
+
         # Вычисляем центральные координаты объекта
         x_center = (x_min + x_max) / 2
         y_center = (y_min + y_max) / 2
@@ -81,16 +75,12 @@ def analyze_detections(detections, frame, gps_coordinates, azimuth, fov_horizont
         cv2.rectangle(frame, (int(x_min), int(y_min)), (int(x_max), int(y_max)), (0, 255, 0), 2)
         label = f"Class: {int(class_id)}, Conf: {confidence:.2f}"
         cv2.putText(frame, label, (int(x_min), int(y_min) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        out.write(frame)
-    
-    if len(detections) == 0:
-        out.write(frame)
 
         # Делаем скриншот и сохраняем изображение
-        # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        # screenshot_name = f"screenshot_{timestamp}.jpg"
-        # cv2.imwrite(screenshot_name, frame)
-        # print(f"Скриншот сохранён: {screenshot_name}")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        screenshot_name = f"screenshot_{timestamp}.jpg"
+        cv2.imwrite(screenshot_name, frame)
+        print(f"Скриншот сохранён: {screenshot_name}")
 
     return results
 
@@ -102,6 +92,7 @@ def main(video_source, gps_coordinates, azimuth, fov_horizontal=90, fov_vertical
         ret, frame = cap.read()
         if not ret:
             break
+
         frame = preprocess_frame(frame)
 
         # YOLO предсказания
@@ -115,6 +106,7 @@ def main(video_source, gps_coordinates, azimuth, fov_horizontal=90, fov_vertical
         #cv2.imshow("Detections", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+
     cap.release()
     cv2.destroyAllWindows()
 
@@ -123,9 +115,6 @@ gps_coordinates = {"latitude": 55.7558, "longitude": 37.6173}
 
 # Запуск программы
 if __name__ == "__main__":
-    video_source = "bench3.mp4"  # Камера по умолчанию
+    video_source = 'bench3.mp4' #0  # Камера по умолчанию
     azimuth = 45  # Текущий азимут камеры
     main(video_source, gps_coordinates, azimuth)
-
-    out.release()
-    cv2.destroyAllWindows()
