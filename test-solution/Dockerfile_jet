@@ -12,7 +12,7 @@ COPY requirements.txt /app/
 
 RUN pip install --use-pep517 -r requirements.txt
 
-COPY new_detection_for_image.py benchmark.py best_yolo11.pt best.pt best_pep.pt Fire_Detection.py Human_Detection.py Human_Detection_vid.py bench3.mp4 /app/
+COPY test.py new_detection_for_image.py benchmark.py best_yolo11.pt best.pt best_pep.pt Fire_Detection.py Human_Detection.py Human_Detection_vid.py bench3.mp4 /app/
 
 RUN mkdir container_output
 

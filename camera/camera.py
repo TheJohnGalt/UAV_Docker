@@ -28,19 +28,31 @@ class ImageHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(b'Error: Unable to capture image.')
 
 if __name__ == '__main__':
-    PORT = 9000
 
     width = 3280
     height = 2464
 
-    # gstreamer для камеры
-    #nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink
-    
-    vidPath = 'bench.mp4'
-    
-    cam = cv2.VideoCapture(vidPath)
-    print(cam.isOpened())
+    #cam = cv2.VideoCapture("nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink")
+    cam = cv2.VideoCapture(0)
+    stat, img = cam.read()
 
-    with socketserver.TCPServer(("", PORT), ImageHandler) as httpd:
-        print(f"Сервер запущен на порту {PORT}")
-        httpd.serve_forever()
+    print(img)
+
+    cv2.imwrite('container_output/img.jpg', img)
+
+    # PORT = 9000
+
+    # width = 3280
+    # height = 2464
+
+    # # gstreamer для камеры
+    # #nvarguscamerasrc sensor-id=0 tnr-mode=2 tnr-strength=1 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink
+    
+    # vidPath = 'bench.mp4'
+    
+    # cam = cv2.VideoCapture(vidPath)
+    # print(cam.isOpened())
+
+    # with socketserver.TCPServer(("", PORT), ImageHandler) as httpd:
+    #     print(f"Сервер запущен на порту {PORT}")
+    #     httpd.serve_forever()

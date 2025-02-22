@@ -8,7 +8,8 @@ RUN apt update && apt -y upgrade
 
 RUN apt install -y --no-install-recommends python3-pip \
          python3-numpy \
-         python3-opencv \
+         nvidia-opencv-dev\
+         nvidia-opencv\
          python3-pillow \
          libopencv-dev \
          gstreamer1.0-tools \

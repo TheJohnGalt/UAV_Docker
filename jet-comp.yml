@@ -14,17 +14,18 @@ services:
   #           - driver: nvidia
   #             count: all
   #             capabilities: [gpu]
+  #   devices:
+  #      - "/dev/video0:/dev/video0:ro"
   #   volumes:
-  #      - /dev/video0:/dev/video0:ro
   #      - /tmp/argus_socket:/tmp/argus_socket
-  #      - /home/user/compvis/UAV_Docker/test-solution/container_output:/app/container_output
+  #      - /home/user/compvis/UAV_Docker/camera/container_output:/app/container_output
   #   ports:
   #     - "9000:9000"
   #   restart: always
   #   privileged: true
 
   client:
-    image: revchenkov/compvis-test_solution:v0.3_client_arm64_b
+    image: revchenkov/compvis-test_solution:v0.3_client_arm64_b_jp5
     build:
       context: test-solution
       dockerfile: Dockerfile_jet
