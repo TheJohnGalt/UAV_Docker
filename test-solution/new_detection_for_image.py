@@ -6,8 +6,15 @@ import torch
 import os
 
 # Загружаем модель YOLOv11
-model = YOLO("best_yolo11.pt")
 
+device = 'cpu'
+
+if torch.cuda.is_available():
+    print("Загрузка модели на CUDA")
+    device = 'cuda'
+else: print("CUDA не обнаружена, загрузка модели на CPU")
+
+model = YOLO("best_yolo11.pt").to(device)
 
 def slice_image(image_path, patch_size=640, overlap=0.2):
     """
@@ -216,4 +223,12 @@ def detect_from_video(video_surce, output_csv=None, output_images_folder='contai
         print(result_dict)
 
 if __name__ == '__main__':
-    detect_from_video('bench3.mp4')
+
+    width = 1920
+    height = 1080
+
+    try:
+        detect_from_video('nvarguscamerasrc sensor-id=0 ! video/x-raw(memory:NVMM), width=(int){width}, height=(int){height}, framerate=21/1, format=(string)NV12 ! nvvidconv ! video/x-raw, format=(string)BGRx ! appsink')
+    finally:
+        print('доступ к камере не получен, обработка тестового видеопотока')
+        detect_from_video('bench3.mp4')

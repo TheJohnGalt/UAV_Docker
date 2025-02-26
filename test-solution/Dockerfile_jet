@@ -1,10 +1,4 @@
-FROM ultralytics/ultralytics:latest-jetson-jetpack6 
-
-RUN apt-get update && apt-get install libx264-dev
-
-RUN python3 -m pip install --upgrade pip
-
-RUN pip install dill
+FROM small_ult:latest
 
 WORKDIR /app
 
@@ -12,7 +6,7 @@ COPY requirements.txt /app/
 
 RUN pip install --use-pep517 -r requirements.txt
 
-COPY test.py new_detection_for_image.py benchmark.py best_yolo11.pt best.pt best_pep.pt Fire_Detection.py Human_Detection.py Human_Detection_vid.py bench3.mp4 /app/
+COPY test.py new_detection_for_image.py best_yolo11.pt best.pt Fire_Detection.py Human_Detection.py bench3.mp4 /app/
 
 RUN mkdir container_output
 
